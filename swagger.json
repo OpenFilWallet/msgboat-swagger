@@ -1,0 +1,202 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "OpenFilWallet msgboat",
+    "description": "OpenFilWallet offline transaction submitter. Only transactions encoded by `OpenFilWallet/OpenFilWallet/chain` can be recognized. If the submission is successful, the transaction cid is returned, otherwise an error is returned.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://www.openfilwallet.com/msgboat/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "send",
+      "description": "Helps send signed transactions to the filecoin network"
+    },
+    {
+      "name": "status",
+      "description": "Service status"
+    }
+  ],
+  "paths": {
+    "/send": {
+      "post": {
+        "tags": [
+          "send"
+        ],
+        "summary": "Submit a signed transaction and return the transaction cid.",
+        "operationId": "send",
+        "requestBody": {
+          "description": "a signed transaction",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Transaction"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendResponse"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Submit exception"
+          }
+        }
+      }
+    },
+    "/status": {
+      "get": {
+        "tags": [
+          "status"
+        ],
+        "summary": "Query service status",
+        "operationId": "status",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StatusResponse"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StatusResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "No nodes available"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "number",
+                "example": 0
+              },
+              "to": {
+                "type": "string",
+                "example": "f1am2dr43qfy4vhfrxmdbmwzlsa3c3wanzm7dn7my"
+              },
+              "from": {
+                "type": "string",
+                "example": "f1ys7n5mrm2vtx6coxc5wkmkddan7rznfkax3a6ki"
+              },
+              "nonce": {
+                "type": "number",
+                "example": 40
+              },
+              "value": {
+                "type": "number",
+                "example": 11000000000000000
+              },
+              "gas_limit": {
+                "type": "number",
+                "example": 603460
+              },
+              "gas_feecap": {
+                "type": "number",
+                "example": 100473
+              },
+              "gas_premium": {
+                "type": "number",
+                "example": 99419
+              },
+              "method": {
+                "type": "number",
+                "example": 0
+              },
+              "params": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "params": {
+                    "type": "string",
+                    "example": ""
+                  }
+                }
+              }
+            }
+          },
+          "signature": {
+            "type": "string",
+            "example": "584201678d7f93453c24e2055d4a284b508a4af3ea7ca8fb03d60cdc0142e08a32b47245bfd02fd09b4900c22b3ef2ad784736f0b96c01893cb56c39f05f3dd769733d00"
+          }
+        }
+      },
+      "SendResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "bafy2bzaceaqt72b7ujkz4ttechoevoehfw4ldh7lkr43hcqtvn4zr6z6ckqug"
+          }
+        },
+        "xml": {
+          "name": "successResponse"
+        }
+      },
+      "StatusResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "Good"
+          }
+        },
+        "xml": {
+          "name": "StatusResponse"
+        }
+      }
+    }
+  }
+}
