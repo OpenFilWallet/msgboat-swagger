@@ -9,3 +9,5 @@ Only transactions encoded by `OpenFilWallet/OpenFilWallet/chain` can be recogniz
 
 
 Simple api: https://openfilwallet.github.io/msgboat-swagger/ 
+
+![image-20230124211736379](./image/image-20230124211736379.png)
