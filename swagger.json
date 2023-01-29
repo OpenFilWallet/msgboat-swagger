@@ -8,6 +8,9 @@
   "servers": [
     {
       "url": "https://www.openfilwallet.com/msgboat/"
+    },
+    {
+      "url": "http://0.0.0.0:6689/"
     }
   ],
   "tags": [
